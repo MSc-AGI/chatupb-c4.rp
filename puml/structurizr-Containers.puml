@@ -1,0 +1,85 @@
+@startuml
+title <size:24>ChatUPB - Contenedores</size>\n<size:24>Aplicacion Java Swing con base de datos SQLite local</size>
+
+set separator none
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 5
+hide stereotype
+
+<style>
+  root {
+    BackgroundColor: #ffffff;
+    FontColor: #444444;
+  }
+  // Element,Database
+  .Element-RWxlbWVudCxEYXRhYmFzZQ== {
+    BackgroundColor: #6e6e73;
+    LineColor: #4d4d50;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Element,Desktop App
+  .Element-RWxlbWVudCxEZXNrdG9wIEFwcA== {
+    BackgroundColor: #faa307;
+    LineColor: #af7204;
+    LineStyle: 0;
+    LineThickness: 2;
+    RoundCorner: 20;
+    FontColor: #1d1d1f;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Element,Person
+  .Element-RWxlbWVudCxQZXJzb24= {
+    BackgroundColor: #e85d04;
+    LineColor: #a24102;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 22;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Relationship
+  .Relationship-UmVsYXRpb25zaGlw {
+    LineThickness: 2;
+    LineStyle: 10-10;
+    LineColor: #444444;
+    FontColor: #444444;
+    FontSize: 24;
+  }
+  // ChatUPB
+  .Boundary-Q2hhdFVQQg== {
+    BackgroundColor: #ffffff;
+    LineColor: #aa6204;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+  }
+</style>
+
+person "==Usuario ChatUPB\n<size:15>[Person]</size>\n\nEstudiante o docente UPB que usa la aplicacion de chat" <<Element-RWxlbWVudCxQZXJzb24=>> as UsuarioChatUPB
+person "==Contacto\n<size:15>[Person]</size>\n\nOtro usuario de ChatUPB en la misma red" <<Element-RWxlbWVudCxQZXJzb24=>> as Contacto
+
+rectangle "ChatUPB\n<size:16>[Software System]</size>" <<Boundary-Q2hhdFVQQg==>> {
+  database "==SQLite Database\n<size:16>[Container: SQLite 3.45]</size>\n\nBase de datos local en ~/Library/Application Support/ChatUPB/chat_upb.sqlite" <<Element-RWxlbWVudCxEYXRhYmFzZQ==>> as ChatUPB.SQLiteDatabase
+  rectangle "==ChatUPB App\n<size:16>[Container: Java 21 / Swing]</size>\n\nAplicacion de escritorio Java Swing empaquetada con jpackage" <<Element-RWxlbWVudCxEZXNrdG9wIEFwcA==>> as ChatUPB.ChatUPBApp
+}
+
+UsuarioChatUPB --> ChatUPB.ChatUPBApp <<Relationship-UmVsYXRpb25zaGlw>> : "Interactua via interfaz Swing"
+ChatUPB.ChatUPBApp --> ChatUPB.SQLiteDatabase <<Relationship-UmVsYXRpb25zaGlw>> : "Lee y escribe contactos, mensajes, conversaciones\n<size:16>[JDBC / SQLite]</size>"
+ChatUPB.ChatUPBApp --> Contacto <<Relationship-UmVsYXRpb25zaGlw>> : "Conexion TCP directa (socket sin cifrar)"
+
+@enduml

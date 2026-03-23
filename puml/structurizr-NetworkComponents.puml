@@ -1,0 +1,91 @@
+@startuml
+title <size:24>ChatUPB - Capa de Red</size>\n<size:24>Comunicacion peer-to-peer via ServerSocket y SocketClient</size>
+
+set separator none
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 5
+hide stereotype
+
+<style>
+  root {
+    BackgroundColor: #ffffff;
+    FontColor: #444444;
+  }
+  // Element,Component
+  .Element-RWxlbWVudCxDb21wb25lbnQ= {
+    BackgroundColor: #fff3e0;
+    LineColor: #b2aa9c;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #1d1d1f;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Element,Person
+  .Element-RWxlbWVudCxQZXJzb24= {
+    BackgroundColor: #e85d04;
+    LineColor: #a24102;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 22;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Relationship
+  .Relationship-UmVsYXRpb25zaGlw {
+    LineThickness: 2;
+    LineStyle: 10-10;
+    LineColor: #444444;
+    FontColor: #444444;
+    FontSize: 24;
+  }
+  // ChatUPB
+  .Boundary-Q2hhdFVQQg== {
+    BackgroundColor: #ffffff;
+    LineColor: #aa6204;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+  }
+  // ChatUPB App
+  .Boundary-Q2hhdFVQQiBBcHA= {
+    BackgroundColor: #ffffff;
+    LineColor: #af7204;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #1d1d1f;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+  }
+</style>
+
+person "==Contacto\n<size:15>[Person]</size>\n\nOtro usuario de ChatUPB en la misma red" <<Element-RWxlbWVudCxQZXJzb24=>> as Contacto
+
+rectangle "ChatUPB\n<size:16>[Software System]</size>" <<Boundary-Q2hhdFVQQg==>> {
+  rectangle "ChatUPB App\n<size:16>[Container: Java 21 / Swing]</size>" <<Boundary-Q2hhdFVQQiBBcHA=>> {
+    rectangle "==SocketClient\n<size:16>[Component: Java Socket]</size>\n\nConexion de socket hacia un peer. Envia y recibe mensajes serializados" <<Element-RWxlbWVudCxDb21wb25lbnQ=>> as ChatUPB.ChatUPBApp.SocketClient
+    rectangle "==SocketListener\n<size:16>[Component: Java Interface]</size>\n\nInterfaz de callback para eventos de red (mensaje recibido, desconexion)" <<Element-RWxlbWVudCxDb21wb25lbnQ=>> as ChatUPB.ChatUPBApp.SocketListener
+    rectangle "==Message / Mensaje\n<size:16>[Component: Java POJOs (Lombok)]</size>\n\nEntidades de mensajes: Hello, Aceptar, Rechazar, Invitacion, Zumbido, CambiarTema, FijarMensaje, EliminarMensaje, MensajeUnico, etc." <<Element-RWxlbWVudCxDb21wb25lbnQ=>> as ChatUPB.ChatUPBApp.MessageMensaje
+    rectangle "==Mediador\n<size:16>[Component: Java Class]</size>\n\nControlador central (patron Mediator). Coordina red, vista y persistencia. Singleton." <<Element-RWxlbWVudCxDb21wb25lbnQ=>> as ChatUPB.ChatUPBApp.Mediador
+    rectangle "==ChatServer\n<size:16>[Component: Java ServerSocket]</size>\n\nServerSocket que escucha conexiones entrantes de otros usuarios" <<Element-RWxlbWVudCxDb21wb25lbnQ=>> as ChatUPB.ChatUPBApp.ChatServer
+  }
+
+}
+
+ChatUPB.ChatUPBApp.Mediador --> ChatUPB.ChatUPBApp.ChatServer <<Relationship-UmVsYXRpb25zaGlw>> : "Inicia servidor de escucha"
+ChatUPB.ChatUPBApp.Mediador --> ChatUPB.ChatUPBApp.SocketClient <<Relationship-UmVsYXRpb25zaGlw>> : "Crea conexiones salientes a peers"
+ChatUPB.ChatUPBApp.ChatServer --> ChatUPB.ChatUPBApp.SocketClient <<Relationship-UmVsYXRpb25zaGlw>> : "Acepta conexion entrante, crea SocketClient"
+ChatUPB.ChatUPBApp.SocketClient --> ChatUPB.ChatUPBApp.Mediador <<Relationship-UmVsYXRpb25zaGlw>> : "Notifica mensajes recibidos via SocketListener"
+ChatUPB.ChatUPBApp.SocketClient --> ChatUPB.ChatUPBApp.MessageMensaje <<Relationship-UmVsYXRpb25zaGlw>> : "Serializa/deserializa mensajes"
+ChatUPB.ChatUPBApp.SocketClient --> Contacto <<Relationship-UmVsYXRpb25zaGlw>> : "Conexion TCP directa (socket sin cifrar)"
+
+@enduml

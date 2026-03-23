@@ -1,0 +1,58 @@
+@startuml
+title <size:24>ChatUPB - Contexto del Sistema</size>\n<size:24>Vista general: usuarios se comunican peer-to-peer via ChatUPB</size>
+
+set separator none
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 5
+hide stereotype
+
+<style>
+  root {
+    BackgroundColor: #ffffff;
+    FontColor: #444444;
+  }
+  // Element,Person
+  .Element-RWxlbWVudCxQZXJzb24= {
+    BackgroundColor: #e85d04;
+    LineColor: #a24102;
+    LineStyle: 0;
+    LineThickness: 2;
+    FontColor: #ffffff;
+    FontSize: 22;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Element,Software System
+  .Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0= {
+    BackgroundColor: #f48c06;
+    LineColor: #aa6204;
+    LineStyle: 0;
+    LineThickness: 2;
+    RoundCorner: 20;
+    FontColor: #ffffff;
+    FontSize: 24;
+    HorizontalAlignment: center;
+    Shadowing: 0;
+    MaximumWidth: 450;
+  }
+  // Relationship
+  .Relationship-UmVsYXRpb25zaGlw {
+    LineThickness: 2;
+    LineStyle: 10-10;
+    LineColor: #444444;
+    FontColor: #444444;
+    FontSize: 24;
+  }
+</style>
+
+person "==Usuario ChatUPB\n<size:15>[Person]</size>\n\nEstudiante o docente UPB que usa la aplicacion de chat" <<Element-RWxlbWVudCxQZXJzb24=>> as UsuarioChatUPB
+person "==Contacto\n<size:15>[Person]</size>\n\nOtro usuario de ChatUPB en la misma red" <<Element-RWxlbWVudCxQZXJzb24=>> as Contacto
+rectangle "==ChatUPB\n<size:16>[Software System]</size>\n\nAplicacion de chat peer-to-peer con interfaz Swing y base de datos local" <<Element-RWxlbWVudCxTb2Z0d2FyZSBTeXN0ZW0=>> as ChatUPB
+
+UsuarioChatUPB --> ChatUPB <<Relationship-UmVsYXRpb25zaGlw>> : "Envia y recibe mensajes, gestiona contactos"
+Contacto --> ChatUPB <<Relationship-UmVsYXRpb25zaGlw>> : "Se conecta via socket TCP para intercambiar mensajes"
+ChatUPB --> Contacto <<Relationship-UmVsYXRpb25zaGlw>> : "Conexion TCP directa (socket sin cifrar)"
+
+@enduml
