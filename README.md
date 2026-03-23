@@ -12,6 +12,11 @@ C4 architecture diagrams for **ChatUPB**, a peer-to-peer chat application built 
 └── puml/                  # PlantUML exports of all diagrams
 ```
 
+## Documentation
+
+- [Que es el Modelo C4?](docs/01_c4_model.md) - History, 4 levels, core principles, Structurizr links
+- [ChatUPB - Arquitectura](docs/02_chatupb_arquitectura.md) - Tech stack, design patterns, available views
+
 ## Views
 
 | View | Level | What it shows |
