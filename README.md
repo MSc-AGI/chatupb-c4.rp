@@ -73,4 +73,4 @@ plantuml -tpng puml/*.puml
 
 ## Author
 
-Architecture diagrams by Marcelo Caballero. Application by Irene Landivar (irenelandivarc1@upb.edu).
+Application by Irene Landivar (irenelandivarc1@upb.edu).
