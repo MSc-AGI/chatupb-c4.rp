@@ -22,6 +22,23 @@ C4 architecture diagrams for **ChatUPB**, a peer-to-peer chat application built 
 | [C3a] Capa de Red | Components (filtered) | P2P networking: ChatServer, SocketClient |
 | [C3b] Capa de Datos | Components (filtered) | Persistence: DAO pattern + SQLite |
 
+## Diagrams
+
+### [C1] System Context
+![System Context](images/structurizr-SystemContext.png)
+
+### [C2] Containers
+![Containers](images/structurizr-Containers.png)
+
+### [C3] Components
+![Components](images/structurizr-Components.png)
+
+### [C3a] Network Layer
+![Network](images/structurizr-NetworkComponents.png)
+
+### [C3b] Data Layer
+![Data](images/structurizr-DataComponents.png)
+
 ## How to view
 
 ### Option 1: Structurizr local (interactive)
