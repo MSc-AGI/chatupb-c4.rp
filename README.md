@@ -6,7 +6,7 @@ C4 architecture diagrams for **ChatUPB**, a peer-to-peer chat application built 
 
 - [Guia de Instalacion](docs/installation/installation.md) - Instalacion paso a paso en macOS (8 capturas)
 - [Uso de la Aplicacion](docs/app-usage/usage.md) - Inicio, contactos y chat P2P (3 capturas)
-- [Herramientas de Arquitectura](docs/tooling/tooling.md) - Structurizr, exportacion y publicacion (7 capturas)
+- [Herramientas de Arquitectura](docs/tooling/tooling.md) - Structurizr, exportacion y publicacion (5 capturas)
 
 ## Architecture Documentation
 
