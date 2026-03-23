@@ -2,17 +2,13 @@
 
 C4 architecture diagrams for **ChatUPB**, a peer-to-peer chat application built as a university project at Universidad Privada Boliviana (UPB).
 
-## What's inside
+## Guides
 
-```
-├── workspace.dsl          # Structurizr DSL - the source of truth
-├── docs/                  # Documentation (rendered inside Structurizr)
-│   ├── 01_c4_model.md     # What is C4? History, principles, links
-│   └── 02_chatupb_arquitectura.md  # Tech stack, design patterns, views
-└── puml/                  # PlantUML exports of all diagrams
-```
+- [Guia de Instalacion](docs/installation/installation.md) - Instalacion paso a paso en macOS (8 capturas)
+- [Uso de la Aplicacion](docs/app-usage/usage.md) - Inicio, contactos y chat P2P (3 capturas)
+- [Herramientas de Arquitectura](docs/tooling/tooling.md) - Structurizr, exportacion y publicacion (7 capturas)
 
-## Documentation
+## Architecture Documentation
 
 - [Que es el Modelo C4?](docs/01_c4_model.md) - History, 4 levels, core principles, Structurizr links
 - [ChatUPB - Arquitectura](docs/02_chatupb_arquitectura.md) - Tech stack, design patterns, available views
