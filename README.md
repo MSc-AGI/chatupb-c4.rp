@@ -1,48 +1,75 @@
-# ChatUPB - C4 Architecture
+# ChatUPB
 
-C4 architecture diagrams for **ChatUPB**, a peer-to-peer chat application built as a university project at Universidad Privada Boliviana (UPB).
+**Mensajeria peer-to-peer para la universidad. Sin servidores. Sin cuentas. Sin intermediarios.**
 
-## Guides
+![Interfaz principal de ChatUPB con lista de contactos, area de chat y dialogo de agregar contacto](docs/app-usage/images/03-interfaz-chat.png)
 
-- [Guia de Instalacion](docs/installation/installation.md) - Instalacion paso a paso en macOS (8 capturas)
-- [Uso de la Aplicacion](docs/app-usage/usage.md) - Inicio, contactos y chat P2P (3 capturas)
-- [Herramientas de Arquitectura](docs/tooling/tooling.md) - Structurizr, exportacion y publicacion (5 capturas)
+ChatUPB es una aplicacion de chat diseñada para estudiantes de la Universidad Privada Boliviana (UPB). Permite enviar mensajes directamente entre computadoras en la misma red, sin depender de servidores externos ni servicios de terceros.
 
-## Architecture Documentation
+## Por que ChatUPB?
 
-- [Que es el Modelo C4?](docs/01_c4_model.md) - History, 4 levels, core principles, Structurizr links
-- [ChatUPB - Arquitectura](docs/02_chatupb_arquitectura.md) - Tech stack, design patterns, available views
+- **Sin servidor central** - Los mensajes viajan directamente entre usuarios via TCP. No hay un servidor que almacene, lea o controle las conversaciones.
+- **Sin cuenta ni registro** - Solo un nombre de usuario. No se necesita email, telefono ni contraseña de servicio.
+- **Privacidad por diseño** - Los datos se quedan en tu computadora. SQLite local almacena el historial de chat, nada sale a la nube.
+- **Instalacion en un clic** - Paquete `.pkg` nativo para macOS con Java 21 incluido. No hay dependencias externas que instalar.
+- **Interfaz moderna** - Tema oscuro/claro, diseño limpio con lista de contactos, area de mensajes y mascota robot.
+- **Codigo abierto** - Proyecto universitario con arquitectura documentada. Ideal para aprender patrones de diseño (MVC, Mediator, DAO).
 
-## Views
+## Como funciona
 
-| View | Level | What it shows |
-|------|-------|---------------|
-| [C1] Contexto del Sistema | System Context | Users and external connections |
-| [C2] Contenedores | Containers | Java app + SQLite database |
-| [C3] Componentes | Components | All 17 internal components (MVC + Mediator) |
-| [C3a] Capa de Red | Components (filtered) | P2P networking: ChatServer, SocketClient |
-| [C3b] Capa de Datos | Components (filtered) | Persistence: DAO pattern + SQLite |
+1. Abre ChatUPB e ingresa tu nombre
+2. Agrega un contacto con su direccion IP (deben estar en la misma red)
+3. Empieza a chatear - los mensajes se envian directamente, sin intermediarios
 
-## Diagrams
+## Guias
 
-### [C1] System Context
-![System Context](images/structurizr-SystemContext.png)
+| Guia | Descripcion |
+|------|-------------|
+| [Instalacion](docs/installation/installation.md) | Instalacion paso a paso en macOS (8 capturas) |
+| [Uso de la Aplicacion](docs/app-usage/usage.md) | Inicio, contactos y chat P2P (3 capturas) |
+| [Herramientas de Arquitectura](docs/tooling/tooling.md) | Structurizr, exportacion y publicacion (5 capturas) |
 
-### [C2] Containers
-![Containers](images/structurizr-Containers.png)
+## Arquitectura
 
-### [C3] Components
-![Components](images/structurizr-Components.png)
+ChatUPB esta documentada con el [modelo C4](docs/01_c4_model.md) - 5 vistas que muestran la arquitectura desde el contexto general hasta los componentes internos.
 
-### [C3a] Network Layer
-![Network](images/structurizr-NetworkComponents.png)
+- [Que es el Modelo C4?](docs/01_c4_model.md) - Historia, 4 niveles, principios
+- [ChatUPB - Arquitectura](docs/02_chatupb_arquitectura.md) - Stack tecnico, patrones de diseño, vistas disponibles
 
-### [C3b] Data Layer
-![Data](images/structurizr-DataComponents.png)
+### [C1] Contexto del Sistema
+![Diagrama de contexto mostrando usuario y conexiones externas](images/structurizr-SystemContext.png)
 
-## How to view
+### [C2] Contenedores
+![Diagrama de contenedores - aplicacion Java y base de datos SQLite](images/structurizr-Containers.png)
 
-### Option 1: Structurizr local (interactive)
+<details>
+<summary>Ver mas diagramas (C3, C3a, C3b)</summary>
+
+### [C3] Componentes
+![17 componentes internos con arquitectura MVC y patron Mediator](images/structurizr-Components.png)
+
+### [C3a] Capa de Red
+![Componentes de red P2P - ChatServer y SocketClient](images/structurizr-NetworkComponents.png)
+
+### [C3b] Capa de Datos
+![Capa de persistencia - patron DAO con SQLite](images/structurizr-DataComponents.png)
+
+</details>
+
+## Stack Tecnico
+
+| Tecnologia | Uso |
+|------------|-----|
+| Java 21 | Lenguaje principal |
+| Swing + MigLayout | Interfaz grafica |
+| SQLite 3.45 | Base de datos local |
+| TCP Sockets | Comunicacion peer-to-peer |
+| Maven | Build y dependencias |
+| jpackage | Instalador nativo macOS |
+
+## Como visualizar la arquitectura
+
+### Opcion 1: Structurizr local (interactivo)
 
 ```bash
 brew install structurizr
@@ -50,28 +77,19 @@ git clone https://github.com/MSc-AGI/chatupb-c4.rp.git
 structurizr local chatupb-c4.rp
 ```
 
-Then open http://localhost:8080/workspace/1
+Abrir http://localhost:8080/workspace/1
 
-### Option 2: Structurizr online
+### Opcion 2: Structurizr online
 
-Go to [structurizr.com/dsl](https://structurizr.com/dsl) and paste the contents of `workspace.dsl`.
+Ir a [structurizr.com/dsl](https://structurizr.com/dsl) y pegar el contenido de `workspace.dsl`.
 
-### Option 3: PlantUML
-
-The `puml/` folder contains pre-exported PlantUML files. Render with:
+### Opcion 3: PlantUML
 
 ```bash
 brew install plantuml
 plantuml -tpng puml/*.puml
 ```
 
-## Tech stack (ChatUPB)
+## Autora
 
-- Java 21, Swing + MigLayout
-- SQLite 3.45 (local)
-- TCP sockets (peer-to-peer, no server)
-- Maven, jpackage (macOS installer)
-
-## Author
-
-Application by Irene Landivar (irenelandivarc1@upb.edu).
+Aplicacion desarrollada por Irene Landivar (irenelandivarc1@upb.edu) - Universidad Privada Boliviana.
